@@ -1,0 +1,24 @@
+{
+  "name": "bigquery-projects-selector",
+  "version": "0.0.1",
+  "authors": [
+    "Tyler Johnson <mail@tyler-johnson.ca>"
+  ],
+  "description": "Shows a dropdown list of user projects",
+  "main": "bigquery-projects-selector.html",
+  "keywords": [
+    "web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "google-signin": "~1.0.3",
+    "google-apis": "GoogleWebComponents/google-apis#~1.1.0"
+  }
+}

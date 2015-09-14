@@ -1,0 +1,14 @@
+{
+  "name": "bigquery-projects-selector",
+  "version": "0.0.1",
+  "description": "Shows a dropdown list of user projects",
+  "main": "bigquery-projects-selector.html",
+  "devDependencies": {
+    "http-server": "^0.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Johnson <mail@tyler-johnson.ca> (http://github.com/tejohnso)",
+  "license": "ISC"
+}
