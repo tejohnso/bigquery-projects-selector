@@ -4,10 +4,12 @@
   "description": "Shows a dropdown list of user projects",
   "main": "bigquery-projects-selector.html",
   "devDependencies": {
-    "http-server": "^0.8.0"
+    "webdriverio": "^3.4.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setup-test-env": "http-server & selenium-standalone start &",
+    "test": "mocha test",
+    "teardown-test-env": "(pgrep -f selenium && pgrep -f http-server) |xargs kill 2>/dev/null"
   },
   "author": "Tyler Johnson <mail@tyler-johnson.ca> (http://github.com/tejohnso)",
   "license": "ISC"

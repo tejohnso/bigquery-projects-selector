@@ -1,63 +1,8 @@
 <link rel="import" href="../google-apis/google-client-loader.html">
 <google-client-loader name="bigquery" version="v2"></google-client-loader>
 
-<template>
-  <select>
-    <option value="" disabled selected>Waiting for authorization</option>
-  </select>
-</template>
+<select>
+  <option value="" disabled selected>Waiting for authorization</option>
+</select>
 
-<script>
-(function() {
-  var thisImportDoc = document.currentScript.ownerDocument,
-  shadowRoot,
-  gapiPromise = new Promise((resolve, reject)=>{
-    thisImportDoc.querySelector("google-client-loader")
-    .addEventListener("google-api-load", resolve);
-  }),
-  proto = Object.create(HTMLElement.prototype);
-
-  proto.createdCallback = function() {
-    shadowRoot = this.createShadowRoot();
-    setUpShadowRoot();
-  };
-
-  document.registerElement("bigquery-projects-selector", {prototype: proto});
-
-  (function addSigninListeners(eventName, fn) {
-    document.querySelector("google-signin").addEventListener(eventName, fn);
-    return addSigninListeners;
-  }("google-signin-success", populateProjectsList)("google-signed-out", reset));
-
-
-  function setUpShadowRoot() {
-    var template = thisImportDoc.querySelector("template"),
-    templateClone = document.importNode(template.content, true);
-    shadowRoot.appendChild(templateClone);
-    shadowRoot.querySelector("select").addEventListener("change", function(e) {
-      shadowRoot.host.dispatchEvent(new e.constructor(e.type, e));
-    });
-  };
-
-  function populateProjectsList() {
-    var select = shadowRoot.querySelector("select");
-
-    gapiPromise.then(()=>{return gapi.client.bigquery.projects.list();})
-    .then((resp)=>{
-      resp.result.projects.forEach((val)=>{
-        var option = document.createElement("option");
-        option.text = val.friendlyName;
-        select.add(option);
-      });
-
-      select.options[0].textContent = "Choose project";
-    });
-  }
-
-  function reset() {
-    if (!shadowRoot) {return;}
-    shadowRoot.querySelector("select").remove();
-    setUpShadowRoot();
-  }
-}());
-</script>
+<script src="bigquery-projects-selector.js"></script>
