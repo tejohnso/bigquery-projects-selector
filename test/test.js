@@ -14,19 +14,22 @@ options = {
 timeForSeleniumInitialRun = 20000;
 
 describe("end to end tests", function() {
-  var client;
+  var client,
+  id = require("./credentials.json").clientId,
+  email = require("./credentials.json").email,
+  pass = require("./credentials.json").pass;
+
   this.timeout(timeForSeleniumInitialRun);
 
   before(()=>{
     client = webdriverio.remote(options);
-    fs.writeFileSync("./test/importing-doc.html", fs.readFileSync("./test/importing-doc.html").toString().replace("CLIENTID", require("./client-id.json")));
     return client.init();
   });
 
   describe("basic functionality", function() {
     it("can read the page title", ()=>{
       return client
-      .url("localhost:8080/test/importing-doc.html")
+      .url("localhost:8080/bigquery-projects-selector/test/importing-doc.html")
       .getTitle()
       .then((title)=> {
         console.log("Title was: " + title);
@@ -37,15 +40,20 @@ describe("end to end tests", function() {
 
   describe("projects", function() {
     it("shows the list of bigquery projects", function() {
-      return client.click("google-signin")
+      return client.waitForExist("google-signin")
+      .then(()=>{return client.execute((id)=>{
+        document.querySelector("google-signin").setAttribute("client-id", id);
+      }, id)})
+      .then(()=>{return client.waitForEnabled("google-signin");})
+      .then(()=>{return client.click("google-signin");})
       .then(()=>{return client.getTabIds();})
-      .then((ids)=>{console.log(ids); return ids.pop()})
+      .then((ids)=>{return ids.pop()})
       .then((id)=>{return client.switchTab(id);})
       .then(()=>{return client.waitForExist("#Email", 10000);})
-      .then(()=>{return client.setValue("#Email", require("./email.json") + "\n");})
+      .then(()=>{return client.setValue("#Email", email + "\n");})
       .then(()=>{return client.waitForExist("#Passwd", 10000);})
       .then(()=>{return client.waitForEnabled("#Passwd", 10000);})
-      .then(()=>{return client.setValue("#Passwd", require("./password.json") + "\n");})
+      .then(()=>{return client.setValue("#Passwd", pass + "\n");})
       .then(()=>{return client.switchTab();})
       .then(()=>{return client.waitUntil(projectListingHasBeenRetrieved, 10000);});
 

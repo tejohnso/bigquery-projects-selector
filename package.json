@@ -7,7 +7,7 @@
     "webdriverio": "^3.4.0"
   },
   "scripts": {
-    "setup-test-env": "http-server & selenium-standalone start &",
+    "setup-test-env": "http-server .. -c-1 & selenium-standalone start &",
     "test": "mocha test",
     "teardown-test-env": "(pgrep -f selenium && pgrep -f http-server) |xargs kill 2>/dev/null"
   },
