@@ -20,7 +20,8 @@
   ("google-signed-out", reset));
 
   function populateProjectsList() {
-    gapiPromise.then(()=>{return gapi.client.bigquery.projects.list();})
+    gapiPromise
+    .then(gapi.client.bigquery.projects.list)
     .then((resp)=>{
       resp.result.projects.forEach((val)=>{
         var option = document.createElement("option");
