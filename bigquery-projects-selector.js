@@ -3,14 +3,7 @@
   selectElement = thisImportDoc.querySelector("select"),
   gapiPromise = new Promise((res)=>{
     thisImportDoc.querySelector("google-client-loader")
-    .addEventListener("google-api-load", ()=>{
-      var interval = setInterval(()=>{
-        if (gapi.client.bigquery.projects) {
-          clearInterval(interval);
-          res();
-        }
-      }, 100);
-    });
+    .addEventListener("google-api-load", res);
   }),
   proto = Object.create(HTMLElement.prototype);
   proto.createdCallback = function() {
