@@ -26,6 +26,7 @@
       resp.result.projects.forEach((val)=>{
         var option = document.createElement("option");
         option.text = val.friendlyName;
+        option.value = val.projectReference.projectId;
         selectElement.add(option);
       });
 
