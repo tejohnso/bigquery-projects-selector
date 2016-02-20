@@ -16,7 +16,7 @@
     document.querySelector("google-signin").addEventListener(eventName, fn);
     return addSigninListeners;
   }
-  ("google-signin-success", populateProjectsList)
+  ("google-signin-aware-success", populateProjectsList)
   ("google-signed-out", reset));
 
   function populateProjectsList() {
